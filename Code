@@ -1,4 +1,74 @@
-import sklearn
+from sklearn import tree
+
+trainingData = []
+animalNames = []
+testingData = []
+
+trainingCSV = open('/users/ashwinr/Downloads/training-data.csv')
+
+rowNum = 0
+for row in trainingCSV:
+    i = 0
+    num = 0
+    animalData = []
+    for data in range(0, 6):
+        str = ''
+        while (row[i] != ",") and (i < len(row) - 2):
+            str = str + row[i]
+            i = i + 1
+        i = i + 1
+        if (data > 0) and (rowNum > 0):
+            num = float(str)
+            animalData.append(num)
+        else:
+            animalData.append(str)
+    animalNames.append(animalData[0])
+    animalData.remove(animalData[0])
+    if rowNum > 0:
+        animalData.append(float(row[i]))
+        trainingData.append(animalData)
+    rowNum = rowNum + 1
+
+
+testingData = []
+testingCSV = open('/users/ashwinr/Downloads/testing-data.csv')
+
+rowNum = 0
+for row in testingCSV:
+    i = 0
+    num = 0
+    animalData = []
+    for data in range(0, 6):
+        str = ''
+        while (row[i] != ",") and (i < len(row) - 2):
+            str = str + row[i]
+            i = i + 1
+        i = i + 1
+        if (data > 0) and (rowNum > 0):
+            num = float(str)
+            animalData.append(num)
+        else:
+            animalData.append(str)
+    animalNames.append(animalData[0])
+    animalData.remove(animalData[0])
+    if rowNum > 0:
+        animalData.append(float(row[i]))
+        testingData.append(animalData)
+    rowNum = rowNum + 1
+
+features = trainingData
+labels = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+clf = tree.DecisionTreeClassifier()
+clf = clf.fit(features, labels)
+
+predictions = []
+predictions = clf.predict(testingData)
+
+print predictions
+
+
+
 
 
 
